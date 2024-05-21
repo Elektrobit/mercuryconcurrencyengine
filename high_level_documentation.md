@@ -65,8 +65,7 @@ See [concurrency summary](concurrency_summary.md) for more information
 
 `mce::unbuffered_channel`s, `mce::buffered_channel`s and are synchronized communication mechanisms for sending 
 values between places in code (running on any combination of normal threads or 
-coroutines). A third type of channel called `mce::broadcast_channel` exists but 
-functions slightly differently from the other two.
+coroutines).
 
 All channels must have their `construct()` function called OR assigned their 
 internals from another channel before they can function (a new channel with constructed context can be generated with a call to a channel's static `make()` procedure). This is because 
@@ -142,11 +141,7 @@ to fail. It will also unblock coroutines and threads using the channel.
 ## Simplifying channels with chan
 ![mercury_icon](img/mercury_icon_tiny.png)
 
-The `mce::chan` object is a special wrapper object which can represent any channel
-which implements `mce:base_channel`, such as an `mce::unbuffered_channel`,
-`mce::buffered_channel`, and `mce::broadcast_channel`.
-Because of this, it only directly gives access to API provided by (or 
-implementable with said API) `mce::base_channel`. 
+The `mce::chan` object is a special wrapper object which can represent any channel which implements `mce:base_channel`, such as an `mce::unbuffered_channel` and `mce::buffered_channel`. Because of this, it only directly gives access to API provided by (or implementable with said API) `mce::base_channel`. 
 
 If you don't want subsequent functions to bother about what kind of channel
 they are using or simply want more readable code use `mce::chan`.
