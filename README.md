@@ -35,7 +35,10 @@ Software distributed under the License is distributed on an "AS IS" BASIS and WI
 
 [Summary of Data Communication Operations](data_communication_summary.md)
 
-`doxygen` documentation can be generated for this library. Install `doxygen` and `graphviz` packages then run `doxygen`:
+[Doxygen Documentation](https://elektrobit.github.io/mercuryconcurrencyengine/)
+
+### Generate Doxygen Documentation
+`doxygen` documentation can be generated locally for this library. Install `doxygen` and `graphviz` packages then run `doxygen`:
 ```
 cd /path/to/your/mce/repo/checkout
 doxygen
