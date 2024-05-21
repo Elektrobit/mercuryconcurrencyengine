@@ -275,6 +275,11 @@ yield</h2>
 await</h2>
 <div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
+<div class="line">// configurable value to specify the minimum number of threads that are kept</div>
+<div class="line">// perpetually in the await workerpool, it can be set in CMakeLists.txt. Increasing</div>
+<div class="line">// this value can minimize latency when many calls to mce::await() are being made.</div>
+<div class="line">#define MCEMINAWAITPROCS</div>
+<div class="line"> </div>
 <div class="line">/*</div>
 <div class="line"> @brief safely block caller while function executes and return the result </div>
 <div class="line"> */</div>
