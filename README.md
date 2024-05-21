@@ -296,7 +296,7 @@ It should be noted that the boost features are automatically downloaded and buil
 
 If you want to build unit tests you will need to checkout submodules for the googletest framework:
 ```
-git clone --recurse-submodules git@git.elektrobitautomotive.com:dennbla/cppconcurrency.git
+git clone --recurse-submodules git@github.com:Elektrobit/mercuryconcurrencyengine.git
 ```  
 
 Building on linux:
