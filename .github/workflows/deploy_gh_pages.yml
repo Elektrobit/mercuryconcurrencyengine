@@ -1,0 +1,25 @@
+name: 'Deploy to GitHub Pages'
+on: 
+  push: 
+    branches: 
+      - main
+jobs:
+  deploy-to-gh-pages:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3 
+
+      - name: Install Doxygen
+        run: sudo apt-get install doxygen -y 
+
+      - name: Generate Doxygen Documentation
+        run: doxygen 
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.TOKEN }}
+          branch: "gh-pages"
+          folder: "html"
