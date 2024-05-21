@@ -168,10 +168,9 @@ This library's API is very simple</h3>
 <li>when CPU <em>may</em> become a bottleneck: prefer single core but fallback to multiple cores (use <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code>)</li>
 </ul>
 <p>It should be noted that in many or most cases the bottleneck is actually not the CPU throughput. In fact, program bottlenecks are not the real reason for many uses of threads, the user may be leveraging threads for asynchronous behavior in general. In those circumstances, best results will probably be found with <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>.</p>
-<p>There are various mechanisms to control the configuration of the background threads (including disabling them, or specifying the count of threads), see <a href="#building-subsets-of-library-features">Building subsets of library features</a> for more information.</p>
 <h4><a class="anchor" id="autotoc_md9"></a>
 Accessible Low level API:</h4>
-<p>The user can manually create and manage <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> objects to schedule and execute coroutines. If the user desires, they can even create custom <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code> objects to manually manage.</p>
+<p>The user can manually create and manage the underlying <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> objects to schedule and execute coroutines. If the user desires, they can even create custom <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code> objects to manually manage.</p>
 <p>See <a class="el" href="md_concurrency_summary.html">summary of concurrent operations</a> for documentation on all of the above features.</p>
 <h3><a class="anchor" id="autotoc_md10"></a>
 Ease of Integration</h3>
