@@ -247,6 +247,11 @@ Another example where explicitly calling `yield()` is useful is when implementin
 ```
 namespace mce {
 
+// configurable value to specify the minimum number of threads that are kept
+// perpetually in the await workerpool, it can be set in CMakeLists.txt. Increasing
+// this value can minimize latency when many calls to mce::await() are being made.
+#define MCEMINAWAITPROCS
+
 /*
  @brief safely block caller while function executes and return the result 
  */
