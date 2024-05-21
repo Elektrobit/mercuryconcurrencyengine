@@ -517,7 +517,7 @@ struct coroutine {
      @return an allocated coroutine
      */
     template <typename Callable, typename... As>
-    static uptr<coroutine> make(Callable&& cb, As&&... as);
+    static std::unique_ptr<coroutine> make(Callable&& cb, As&&... as);
 
     /// construct a coroutine from a thunk
     template <typename THUNK> 
@@ -799,7 +799,7 @@ struct mce::scheduler::park
     struct continuation
     {
         // pointer to coroutine storage location
-        uptr<mce::coroutine>* coroutine; 
+        std::unique_ptr<mce::coroutine>* coroutine; 
 
         // memory to source scheduler storage location
         std::weak_ptr<mce::scheduler>* source;
@@ -828,7 +828,7 @@ This object is the lowest level coroutine blocking mechanism. It is utilized by 
 
 All higher level coroutine blocking mechanics are built on this structure. A mutable reference to a `park::continuation` is passed to `park::suspend()`, which will register the continuation with the `scheduler` running on the current thread and `yield()` control to said `scheduler`, suspending execution of the calling coroutine.
 
-When the `scheduler` resumes control, it will assign the just running coroutine to the dereferenced `uptr<mce::coroutine>` `coroutine`. It will then assign its weak_ptr to the dereferenced `std::weak_ptr<scheduler>` `source`, allowing the owner of the continuation to re-schedule the coroutine on the source scheduler. 
+When the `scheduler` resumes control, it will assign the just running coroutine to the dereferenced `std::unique_ptr<mce::coroutine>` `coroutine`. It will then assign its weak_ptr to the dereferenced `std::weak_ptr<scheduler>` `source`, allowing the owner of the continuation to re-schedule the coroutine on the source scheduler. 
 
 After passing the coroutine to its destination, the specified `cleanup()` method will be called with `memory`. This can be any operation, accepting any data as an argument. A common usecase is to unlock an atomic lock object.
 
