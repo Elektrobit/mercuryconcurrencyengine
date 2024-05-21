@@ -545,6 +545,16 @@ spinlock</h2>
 scheduler</h2>
 <div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
+<div class="line">struct lifecycle {</div>
+<div class="line">    enum state </div>
+<div class="line">    {</div>
+<div class="line">        ready, /// initial state after construction or after resume() is called</div>
+<div class="line">        running, /// run() has been called and is executing coroutines</div>
+<div class="line">        suspended, /// temporarily halted</div>
+<div class="line">        halted /// permanently halted by a call to halt() </div>
+<div class="line">    };</div>
+<div class="line">};</div>
+<div class="line"> </div>
 <div class="line">struct scheduler {</div>
 <div class="line">    // see dedicated section explaining this object</div>
 <div class="line">    struct park </div>
@@ -556,15 +566,8 @@ scheduler</h2>
 <div class="line">    // see dedicated section explaining this object</div>
 <div class="line">    struct parkable;</div>
 <div class="line"> </div>
-<div class="line">    enum e_state </div>
-<div class="line">    {</div>
-<div class="line">        ready, /// initial state after construction or after resume() is called</div>
-<div class="line">        running, /// run() has been called and is executing coroutines</div>
-<div class="line">        suspended, /// temporarily halted</div>
-<div class="line">        halted /// permanently halted by a call to halt() </div>
-<div class="line">    };</div>
-<div class="line"> </div>
-<div class="line">    e_state state(); // return the scheduler&#39;s state</div>
+<div class="line">    // return the scheduler&#39;s state</div>
+<div class="line">    lifecycle::state get_state();</div>
 <div class="line"> </div>
 <div class="line">    // allocate and initialize a scheduler</div>
 <div class="line">    static std::shared_ptr&lt;scheduler&gt; make(); </div>
@@ -780,7 +783,7 @@ threadpool</h2>
 <div class="line">    ~threadpool();</div>
 <div class="line"> </div>
 <div class="line">    /// return the workers&#39; state</div>
-<div class="line">    scheduler::e_state state();</div>
+<div class="line">    lifecycle::state get_state();</div>
 <div class="line"> </div>
 <div class="line">    /// suspend all workers, returning true if all workers suspend() == true, else false</div>
 <div class="line">    bool suspend();</div>
