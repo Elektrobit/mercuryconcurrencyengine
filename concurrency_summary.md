@@ -589,6 +589,16 @@ In such a scenario it is (almost certainly) better to block the coroutine using 
 ```
 namespace mce {
 
+struct lifecycle {
+    enum state 
+    {
+        ready, /// initial state after construction or after resume() is called
+        running, /// run() has been called and is executing coroutines
+        suspended, /// temporarily halted
+        halted /// permanently halted by a call to halt() 
+    };
+};
+
 struct scheduler {
     // see dedicated section explaining this object
     struct park 
@@ -600,15 +610,8 @@ struct scheduler {
     // see dedicated section explaining this object
     struct parkable;
 
-    enum e_state 
-    {
-        ready, /// initial state after construction or after resume() is called
-        running, /// run() has been called and is executing coroutines
-        suspended, /// temporarily halted
-        halted /// permanently halted by a call to halt() 
-    };
-
-    e_state state(); // return the scheduler's state
+    // return the scheduler's state
+    lifecycle::state get_state();
 
     // allocate and initialize a scheduler
     static std::shared_ptr<scheduler> make(); 
@@ -850,7 +853,7 @@ struct threadpool
     ~threadpool();
 
     /// return the workers' state
-    scheduler::e_state state();
+    lifecycle::state get_state();
 
     /// suspend all workers, returning true if all workers suspend() == true, else false
     bool suspend();
