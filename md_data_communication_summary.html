@@ -65,12 +65,12 @@ $(function() {
 <div class="title">Summary of Data Communication Operations </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md91"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md92"></a>
 A word about concurrency</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>While all channel objects below can be used with <code>std::thread</code> their simplest and most efficient usage occurs when used when running in a <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code> provided by the concurrency features of this library.</p>
 <p>See <a class="el" href="md_concurrency_summary.html">Concurrency Summary</a>.</p>
-<h1><a class="anchor" id="autotoc_md92"></a>
+<h1><a class="anchor" id="autotoc_md93"></a>
 Table of Contents</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <ul>
@@ -80,7 +80,7 @@ Table of Contents</h1>
 <li><a href="#buffered-channel">buffered channel</a></li>
 <li><a href="#chan">chan</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md93"></a>
+<h2><a class="anchor" id="autotoc_md94"></a>
 shared channel API</h2>
 <p>The following is taken from <code><a class="el" href="base__channel_8hpp.html">mce/base_channel.hpp</a></code>. All objects therein are in the <code>mce</code> namespace.</p>
 <p>The following result enum is provided: </p><div class="fragment"><div class="line">// enum for channel operation results</div>
@@ -150,7 +150,7 @@ shared channel API</h2>
 <div class="line">        std::cout &lt;&lt; &quot;e: &quot; &lt;&lt; e &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md94"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md95"></a>
 sending void</h2>
 <p>Channels cannot be trivially templated to <code>void</code> because of how their shared API is designed. IE, <code>send(const T&amp;)</code> (and other code which references <code>T</code>) is invalid in <code>c++</code> when applied to type <code>void</code>.</p>
 <p>The user who wants channel synchronization but wants to minimize copy costs can use basic types like <code>int</code>, <code>size_t</code>, or <code>char</code> as the templated type. However, a clarity workaround can be made by utilizing empty structs:</p>
@@ -183,7 +183,7 @@ sending void</h2>
 <div class="line">receiver received</div>
 <div class="line">main received</div>
 <div class="line">$</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md95"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md96"></a>
 unbuffered channel</h2>
 <p>Implemented in <code><a class="el" href="unbuffered__channel_8hpp.html">mce/unbuffered_channel.hpp</a></code> </p><div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -222,7 +222,7 @@ unbuffered channel</h2>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_021</div>
 <div class="line">14</div>
 <div class="line">$</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md96"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md97"></a>
 buffered channel</h2>
 <p>Implemented in <code><a class="el" href="buffered__channel_8hpp.html">mce/buffered_channel.hpp</a></code> </p><div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -278,7 +278,7 @@ buffered channel</h2>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_022</div>
 <div class="line">42</div>
 <div class="line">$</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md97"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md98"></a>
 chan</h2>
 <p>Implemented in <code><a class="el" href="chan_8hpp.html">mce/chan.hpp</a></code>, specialized or unique API: </p><div class="fragment"><div class="line">namespace mce {</div>
 <div class="line">    </div>

@@ -65,17 +65,17 @@ $(function() {
 <div class="title">Coding Standards </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md99"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md100"></a>
 C++ version:</h1>
 <ul>
 <li>must be c++11</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md100"></a>
+<h1><a class="anchor" id="autotoc_md101"></a>
 Standard C++:</h1>
 <ul>
 <li>if something is available in 'std', use it over external libraries like 'boost'</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md101"></a>
+<h1><a class="anchor" id="autotoc_md102"></a>
 Line widths</h1>
 <p>Line width has a large impact on readability, especially in constrained windowed environments such as IDEs, so wherever it is reasonable make every effort to curtail lines within 80 characters. This includes but is not limited to:</p><ul>
 <li>Breaking single lines into multiple lines</li>
@@ -83,7 +83,7 @@ Line widths</h1>
 <li>Using references or pointers on local variables that are deeply nested</li>
 <li>Breaking functionality into smaller functions or lambdas</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md102"></a>
+<h1><a class="anchor" id="autotoc_md103"></a>
 Naming</h1>
 <ul>
 <li>Extremely terse naming should be reserved for:<ul>
@@ -108,12 +108,12 @@ Naming</h1>
 </li>
 <li>Do not include type information in the name, as this is both harder to read and a risk in case the actual type changes.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md103"></a>
+<h1><a class="anchor" id="autotoc_md104"></a>
 Auto</h1>
 <p>The auto keyword simplifies text, eases code refactoring, and it is easy for the reader to derive type using the right hand value. Therefore:</p><ul>
 <li>Use auto whenever appropriate for variables</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md104"></a>
+<h1><a class="anchor" id="autotoc_md105"></a>
 Getters and Deep Member Access</h1>
 <p>If a getter function or a deep object access needs to happen more than once, create a reference to the result or copy the value. This improves readability by removing unnecessary text and possibly performance.</p>
 <ul>
@@ -122,7 +122,7 @@ Getters and Deep Member Access</h1>
 <div class="line">auto&amp; my_val = obj.obj2.obj3.my_val;</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md105"></a>
+<h1><a class="anchor" id="autotoc_md106"></a>
 Namespaces:</h1>
 <ul>
 <li>Do not use "using namespace" keywords in header code.</li>
@@ -137,12 +137,12 @@ Namespaces:</h1>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md106"></a>
+<h1><a class="anchor" id="autotoc_md107"></a>
 Whitespace:</h1>
 <ul>
 <li>Use 4 spaces, not tabs</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md107"></a>
+<h1><a class="anchor" id="autotoc_md108"></a>
 Naming:</h1>
 <ul>
 <li>object, functions, variables, and filenames are lowercase with underscores<ul>
@@ -156,7 +156,7 @@ Naming:</h1>
 <li>thread_locals (c++11 thread scoped globals) are prefixed with 'tl_'</li>
 <li>defines are UPPERCASE</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md108"></a>
+<h1><a class="anchor" id="autotoc_md109"></a>
 Boolean Logic</h1>
 <p>When boolean logic is not trivial, store result in a named variable instead of directly used in an if, else if, while, or for. This improves readability by separating the decision making from the result of the decision, as well as describing the algorithm by giving the logic a name: </p><div class="fragment"><div class="line">bool we_are_in_x_state = (a &amp;&amp; (b || c)) || d;</div>
 <div class="line"> </div>
@@ -164,7 +164,7 @@ Boolean Logic</h1>
 <div class="line">{</div>
 <div class="line">    ...</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md109"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md110"></a>
 Brackets:</h1>
 <ul>
 <li>Always use brackets with if/else clauses to protect against future changes to the code.</li>
@@ -189,7 +189,7 @@ Brackets:</h1>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md110"></a>
+<h1><a class="anchor" id="autotoc_md111"></a>
 Comma Separated Lists:</h1>
 <p>Use the following styles:</p>
 <ul>

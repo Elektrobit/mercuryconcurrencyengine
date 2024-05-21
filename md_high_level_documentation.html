@@ -65,7 +65,7 @@ $(function() {
 <div class="title">High Level Cpp Coroutine Concurrency Summary </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md35"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md36"></a>
 Table of Contents</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <ul>
@@ -78,7 +78,7 @@ Table of Contents</h1>
 <li><a href="#running-coroutines-with-blocking-calls">Running coroutines with blocking calls</a></li>
 <li><a href="#behind-the-scenes">Behind the scenes</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md36"></a>
+<h1><a class="anchor" id="autotoc_md37"></a>
 Running code as a concurrent coroutine</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>The functions <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>, <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> and <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code> will launch a given function or Callable (and any arguments) as a concurrently executing coroutine. Data can be communicated between coroutines and threads via channels (<code><a class="el" href="structmce_1_1chan.html">mce::chan</a></code>, <code><a class="el" href="structmce_1_1unbuffered__channel.html">mce::unbuffered_channel</a></code>, <code><a class="el" href="structmce_1_1buffered__channel.html">mce::buffered_channel</a></code>) and their <code>send()</code> and <code>recv()</code> methods.</p>
@@ -114,7 +114,7 @@ Running code as a concurrent coroutine</h1>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_005</div>
 <div class="line">arg0: 3; arg1: hello world</div>
 </div><!-- fragment --><p>See <a class="el" href="md_concurrency_summary.html">concurrency summary</a> for more information</p>
-<h1><a class="anchor" id="autotoc_md37"></a>
+<h1><a class="anchor" id="autotoc_md38"></a>
 Channels explained</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p><code><a class="el" href="structmce_1_1unbuffered__channel.html">mce::unbuffered_channel</a></code>s, <code><a class="el" href="structmce_1_1buffered__channel.html">mce::buffered_channel</a></code>s and are synchronized communication mechanisms for sending values between places in code (running on any combination of normal threads or coroutines). A third type of channel called <code>mce::broadcast_channel</code> exists but functions slightly differently from the other two.</p>
@@ -159,7 +159,7 @@ Channels explained</h1>
 <div class="line">func said hello</div>
 </div><!-- fragment --><p>As a note, all channels support the function <code>void close()</code>, which will cause all current and future communication operations (such as <code>send()</code> and <code>recv()</code>) to fail. It will also unblock coroutines and threads using the channel.</p>
 <p><code><a class="el" href="structmce_1_1unbuffered__channel.html">mce::unbuffered_channel</a></code>s and mce::<code>buffered_channel</code>s also have other functions such as <code>try_recv()</code> in addition to their standard methods. See <a class="el" href="md_data_communication_summary.html">data communication summary</a> for more information.</p>
-<h1><a class="anchor" id="autotoc_md38"></a>
+<h1><a class="anchor" id="autotoc_md39"></a>
 Simplifying channels with chan</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>The <code><a class="el" href="structmce_1_1chan.html">mce::chan</a></code> object is a special wrapper object which can represent any channel which implements <code>mce:base_channel</code>, such as an <code><a class="el" href="structmce_1_1unbuffered__channel.html">mce::unbuffered_channel</a></code>, <code><a class="el" href="structmce_1_1buffered__channel.html">mce::buffered_channel</a></code>, and <code>mce::broadcast_channel</code>. Because of this, it only directly gives access to API provided by (or implementable with said API) <code><a class="el" href="structmce_1_1base__channel.html">mce::base_channel</a></code>.</p>
@@ -202,7 +202,7 @@ Simplifying channels with chan</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_007</div>
 <div class="line">ch1: hello; ch2: world</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md39"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>
 Channel iterators</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>All channels provide iterator support with <code>begin()</code> and <code>end()</code>, allowing usage in range-for loops. This behavior is very useful because channel iterators are == <code>end()</code> when the channel is closed, meaning you don't have to watch for operations to begin failing.</p>
@@ -255,7 +255,7 @@ Channel iterators</h1>
 <div class="line">hello8</div>
 <div class="line">hello9</div>
 <div class="line">$</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md41"></a>
 Using coroutines and channels to generate asynchronous futures</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>Combining the <code>mce::concurrent</code> function with channels allows trivial implementation of futures (where the channel is analogous to a <code>std::future</code> object provided when <code>std::async()</code> is called):</p>
@@ -279,7 +279,7 @@ Using coroutines and channels to generate asynchronous futures</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_010</div>
 <div class="line">The number: 3</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md41"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md42"></a>
 Running coroutines blocking on other coroutines</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>Coroutines that detect they are blocked will suspend execution by communicating their blocked state and yielding to their calling context. Normally the calling context within this framework is a <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> object which is responsible for efficiently executing the next coroutine.</p>
@@ -308,7 +308,7 @@ Running coroutines blocking on other coroutines</h1>
 <div class="line"> </div>
 <div class="line">    return 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md42"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md43"></a>
 Running coroutines with blocking calls</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>A consequence of true blocking behavior is that by definition it blocks the entire thread. In the case of a thread running multiple coroutines this will therefore block all other coroutines from running, causing extreme delay (or deadlock if any coroutines require interaction from another coroutine on the blocked thread).</p>
@@ -416,7 +416,7 @@ Running coroutines with blocking calls</h1>
 <div class="line">file successfully read</div>
 <div class="line">fileContent: hello world!</div>
 <div class="line">$</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md43"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md44"></a>
 Using timers</h1>
 <p>The <code>mce</code> library provides is an object called <code><a class="el" href="structmce_1_1timer__service.html">mce::timer_service</a></code> in <code><a class="el" href="timer_8hpp.html">timer.hpp</a></code> (see "timer service" in <a class="el" href="md_concurrency_summary.html">Summary of Concurrent Operations</a> for more information on this object), which can scheduler timers. This object requires its own system thread to run on. Unless disabled by compiler define MCE_DISABLE_DEFAULT_TIMER_THREADS, this frameworks provides a default <code><a class="el" href="structmce_1_1timer__service.html">mce::timer_service</a></code> running on a background worker thread accessible via function <code>std::shared_pointer&lt;<a class="el" href="structmce_1_1timer__service.html">mce::timer_service</a>&gt; <a class="el" href="timer_8hpp.html#ae0c5845b438107a32cdde80510a3f5f7" title="Access to default mce::timer_service object.">mce::default_timer_service()</a></code>.</p>
 <p>It should be noted that the toplevel <code><a class="el" href="timer_8hpp.html#a4f3d651eea461040f92652f0f2455ea0" title="launch a timer with a Callable to be called on timeout">mce::timer()</a></code> operation launch timers whose timeouts occur <em>as a coroutine</em> on the same <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> of the system thread the <code><a class="el" href="timer_8hpp.html#a4f3d651eea461040f92652f0f2455ea0" title="launch a timer with a Callable to be called on timeout">mce::timer()</a></code> was called on. This is behavior causes timeouts to be "asynchronous" but they execute on the same thread that launched them, instead of on a dedicated timer_service thread.</p>
@@ -433,10 +433,10 @@ Using timers</h1>
 <div class="line">    //... continue operations</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The above business logic is similar to how <code><a class="el" href="timer_8hpp.html#abccb4fe0939b4eb26cd7e8a70c3b33d2" title="Put coroutine or thread to sleep in a blocking fashion.">mce::sleep()</a></code> calls operate.</p>
-<h1><a class="anchor" id="autotoc_md44"></a>
+<h1><a class="anchor" id="autotoc_md45"></a>
 Behind the scenes</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
-<h2><a class="anchor" id="autotoc_md45"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 A note on reference bindings</h2>
 <p>Throughout this library various functions will take other functions and an optional set of arguments which are internally bound together using <code>std::bind()</code>. Example functions which have this behavior: </p><div class="fragment"><div class="line">template &lt;typename F, typename... A&gt; void mce::concurrent(F&amp;&amp;, A&amp;&amp;...);</div>
 <div class="line">template &lt;typename F, typename... A&gt; void mce::await(F&amp;&amp;, A&amp;&amp;...);</div>
@@ -486,7 +486,7 @@ A note on reference bindings</h2>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_004</div>
 <div class="line">i: 2</div>
 </div><!-- fragment --><p>However, it should be noted that modifying by reference on different threads without synchronization is often an error and can cause the program to crash. This can be avoided by coroutines running on the <em>same</em> thread, but it is generally better to avoid the situation entirely and communicate instead through channels.</p>
-<h2><a class="anchor" id="autotoc_md46"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 Thunks!</h2>
 <p>This project makes extensive use of thunks, also known as nullary lambdas. Lambdas are anonymous functions, which is a complicated way of saying they are functions we can define and manage <em>inside other functions</em>. A thunk is a function which takes no arguments and returns no value. While this sounds useless, lambdas can "capture context", allowing them to take references or make copies of data available in the current scope while they are being constructed:</p>
 <p><a href="ex/src/example_013.cpp">example_013 source</a> </p><div class="fragment"><div class="line">// example_013</div>
@@ -520,7 +520,7 @@ Thunks!</h2>
 <div class="line">    my_thunk();</div>
 <div class="line">    my_thunk2();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md47"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md48"></a>
 Segmented Coroutine Stacks</h2>
 <p>At the moment, coroutines are created with whatever default stack allocator the boost coroutine2 library provides (which itself is determined by what is available from boost context). A more optimal solution would probably be using "segmented_stack" allocators. However, segmented_stack objects require that boost context be compiled with specific flags, which are not guaranteed to be set.</p>
 <p>A potential enhancement might be the ability to initialize threadpools to a specific allocator type, allowing the default_threadpool to be enhanced as available. Of note, I believe the default allocator <em>is</em> a segmented stack allocator when it is available, so the current implementation would use that by default when compiled with the boost context library with segmented stacks enabled.</p>

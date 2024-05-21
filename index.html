@@ -95,10 +95,13 @@ Documentation</h1>
 <p><a class="el" href="md_high_level_documentation.html">High Level Cpp Coroutine Concurrency Summary</a></p>
 <p><a class="el" href="md_concurrency_summary.html">Summary of Concurrent Operations</a></p>
 <p><a class="el" href="md_data_communication_summary.html">Summary of Data Communication Operations</a></p>
-<p><code>doxygen</code> documentation can be generated for this library. Install <code>doxygen</code> and <code>graphviz</code> packages then run <code>doxygen</code>: </p><div class="fragment"><div class="line">cd /path/to/your/mce/repo/checkout</div>
+<p><a href="https://elektrobit.github.io/mercuryconcurrencyengine/">Doxygen Documentation</a></p>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Generate Doxygen Documentation</h2>
+<p><code>doxygen</code> documentation can be generated locally for this library. Install <code>doxygen</code> and <code>graphviz</code> packages then run <code>doxygen</code>: </p><div class="fragment"><div class="line">cd /path/to/your/mce/repo/checkout</div>
 <div class="line">doxygen</div>
 </div><!-- fragment --><p> The generated <code>doc/</code> directory should contain both <code>html</code> and <code>rtf</code> generated documentation. For <code>html</code>, open <code>index.html</code> by a browser to view the documentation.</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Rationale</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>C++ concurrency is too complicated. Many modern languages implement similar functionality through simpler and/or more expressive mechanisms, often executed at a comparable, or <em>better</em>, speed.</p>
@@ -113,14 +116,14 @@ Rationale</h1>
 <li>is very flexible</li>
 <li>is easy to integrate in existing code</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 What is a coroutine?</h2>
 <p>Definition from <a href="https://en.wikipedia.org/wiki/Coroutine">wikipedia</a>: </p><div class="fragment"><div class="line">Coroutines are computer program components that generalize subroutines for non-preemptive multitasking, </div>
 <div class="line">by allowing execution to be suspended and resumed. Coroutines are well-suited for implementing familiar </div>
 <div class="line">program components such as cooperative tasks, exceptions, event loops, iterators, infinite lists and pipes.</div>
 </div><!-- fragment --><p>Coroutines are very useful tools in concurrency because they are both lightweight and extremely fast when context switching. In fact, unit testing in this project reveals some edgecases which are greater than ~10x faster compared to threads (in some extreme edgecases, MUCH faster than that). These properties allow for efficient concurrent algorithms which are otherwise very difficult to write cleanly.</p>
 <p>This library makes heavy use of coroutines (provided by <code>Boost.Context</code> and <code>Boost.Coroutine2</code>) to implement its features.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Why this instead of Boost.Fiber, libdill or C++20 coroutines?</h2>
 <p>There are a few reasons to use this instead of other projects like <a href="https://github.com/boostorg/fiber">Boost.Fiber</a>, <a href="https://github.com/sustrik/libdill">libdill</a>, or <a href="https://en.cppreference.com/w/cpp/language/coroutines">c++20 coroutines</a>.</p>
 <p>First of all, each of the above frameworks has some very inconvenient drawbacks:</p>
@@ -128,7 +131,7 @@ Why this instead of Boost.Fiber, libdill or C++20 coroutines?</h2>
 <p><code>libdill</code>, a <code>c</code> library, does not implement its framework with multithreading in mind, presupposing that programs would be singlethreaded with coroutines providing concurrency. It's documentation does suggest that multithreading is possible but does not provide much assistance in making it work. No doubt this is ideal in many programs which desire to write their code in <code>c</code>. However, the lack of default multithreaded executors limits the usability and potential scope of the library for many applications (especially ones that don't want to write and debug their own!). Futhermore, because <code>libdill</code> is a <code>c</code> library, it eschews much of the convenience and simplicitly possible in a well designed <code>c++</code> library due to language limitations.</p>
 <p>Finally, <code>c++20 coroutines</code> are... an intensely complicated topic. They are extremely fast and lightweight, but just as extremely low level. They are highly structured in a way that limits what can be done with them. Their requirements essentially require that any program that utilizes them must design their program around <code>c++20 coroutines</code> at some level rather than simply making use of them. Most of all, they are <em>anything</em> but easy to use. Frankly, I consider them, at least in their current form, a topic only approachable by <code>c++</code> experts, and could not be easily utilized by a broader team.</p>
 <p>In comparison, this library attempts to address the various issues from the other frameworks:</p>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md8"></a>
 This library's API is very simple</h3>
 <p>The mechanisms in this library are designed for simplicity and usability first, instead of as a framework which must provide maximum design flexibility. Mechanisms make use of <code>c++</code> templates to simplify user boilerplate as much as possible.</p>
 <p>Scheduling coroutines on backend worker threads is simple, fast, flexible, safe and setup by default. No extra work is required to efficiently schedule coroutine tasks in multithreaded pool of workers. Simply use <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> (to prefer multi cpu-core scheduling) or <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> (to prefer scheduling on the current cpu if possible): <a href="ex/src/example_009.cpp">example_009 source</a> </p><div class="fragment"><div class="line">#include &lt;string&gt;</div>
@@ -166,11 +169,11 @@ This library's API is very simple</h3>
 </ul>
 <p>It should be noted that in many or most cases the bottleneck is actually not the CPU throughput. In fact, program bottlenecks are not the real reason for many uses of threads, the user may be leveraging threads for asynchronous behavior in general. In those circumstances, best results will probably be found with <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>.</p>
 <p>There are various mechanisms to control the configuration of the background threads (including disabling them, or specifying the count of threads), see <a href="#building-subsets-of-library-features">Building subsets of library features</a> for more information.</p>
-<h4><a class="anchor" id="autotoc_md8"></a>
+<h4><a class="anchor" id="autotoc_md9"></a>
 Accessible Low level API:</h4>
 <p>The user can manually create and manage <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> objects to schedule and execute coroutines. If the user desires, they can even create custom <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code> objects to manually manage.</p>
 <p>See <a class="el" href="md_concurrency_summary.html">summary of concurrent operations</a> for documentation on all of the above features.</p>
-<h3><a class="anchor" id="autotoc_md9"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Ease of Integration</h3>
 <p>All concurrent mechanisms in <code>mce</code> are designed to behave correctly whether they are being called from a standard thread (<code>std::thread</code>, generally a <code>pthread</code> under the hood) or being called from within a coroutine (<code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code>, a managed <code>boost::coroutines2::coroutine</code> under the hood). <em>This is not a trivial feature</em>, and not all competing <code>c++</code> frameworks attempt it. In particular, none that I know of correctly synchronize between <code>coroutines</code> and code running <em>outside</em> of <code>coroutines</code> like this library does by default.</p>
 <p><em>This makes it very easy to integrate this library into existing <code>c++</code> code</em>.</p>
@@ -186,7 +189,7 @@ Ease of Integration</h3>
 <div class="line">mce::await()</div>
 <div class="line">mce::timer()</div>
 <div class="line">mce::sleep()</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
 High Level Communication Mechanisms</h3>
 <p>A variety of flexible and easy to use communication mechanisms are provided out of the box to handle 99% of communication needs within a single process: </p><div class="fragment"><div class="line">mce::chan // wrap any other channel (a synchronized queue-like object allowing sends and receives)</div>
 <div class="line">mce::unbuffered_channel // channel with minimal memory footprint that leverages coroutine context switching efficiency</div>
@@ -194,7 +197,7 @@ High Level Communication Mechanisms</h3>
 <div class="line">mce::await() // block an operation without blocking the calling thread if called by a coroutine</div>
 <div class="line">mce::mutex // a replacement for `std::mutex` which works with coroutines and threads, usable with mce::condition_variable</div>
 <div class="line">mce::condition_variable // a replacement for `std::condition_variable` for use with `mce::mutex`</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md12"></a>
 Trivial blocking operations</h3>
 <p>One of the inherent pitfalls of coroutines is that their blocking behavior is managed by the program instead of by the operating system. This means you can cause unexpected deadlock and innefficiency when trying to call any function that blocks a worker thread where coroutines are running. <code>Boost.Fiber</code> specifies the user should either implement non-blocking IO calls or to setup an asynchronous callback mechanism with <code>Boost.Asio</code> to deal with this limitation.</p>
 <p>I think this is far too much work to expect of the average programmer (OR an architect, who has many other important things to do) when dealing with something as complex as coroutine concurrency, with far too little gained in efficiency in the average case.</p>
@@ -264,18 +267,18 @@ Trivial blocking operations</h3>
 <p>This means it's generally safe to read/write to memory in their stacks <em>by reference</em>. You can think of functions passed to <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> as "executing on the stack" of the caller, even though they are actually executing <em>somewhere else</em>.</p>
 <p>If <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> is called outside of a coroutine running on a <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> OR <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> was called inside another call to <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code>, the argument Callable is executed immediately on the current thread instead of on another thread. Otherwise, the calling coroutine will be blocked an the operation passed to <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> will be executed on another, dedicated thread inside another <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code>.</p>
 <p>Calls (or implicit calls) to <code><a class="el" href="scheduler_8hpp.html#a8c2a408455943622c5f71f3ff46e5068" title="returns a shared pointer to the scheduler the calling scope is running in">this_scheduler()</a></code>, <code>this_scheduler_ref()</code>, <code><a class="el" href="threadpool_8hpp.html#aff50fe740e3be609a5f698e6dbe8e65e" title="return a reference to the threadpool the calling code is executing in">this_threadpool()</a></code>, or <code>this_threadpool_ref()</code> made within a call to <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> will return the values they would have if they had been called outside of <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code>. That is, code running in <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> will be able to schedule operations as if it was running in its original execution environment. IE, calls to <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>, <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code>, and <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code> will function "normally".</p>
-<h4><a class="anchor" id="autotoc_md12"></a>
+<h4><a class="anchor" id="autotoc_md13"></a>
 What about Networking or other Features?</h4>
 <p>A common feature in coroutine frameworks is the presence of ipv4/ipv6 support. Said frameworks want to provide a coroutine compatible API for said operations. IE, networking is, by design, a blocking task, and blocking tasks running in a coroutine scheduling environment can introduce latency or deadlock.</p>
 <p>However, it should be pointed out that the real problem here is not that networking "functionality" creates problems for coroutines but the fact that networking <em>features</em> are <em>blocking</em>. As discussed in the previous section, blocking tasks can be passed to <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> for execution where they won't affect scheduling of any other coroutines. Additionally, because communication channels work in both coroutines and standard threads, the task executing in <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> (or any other <code>std::thread</code>) can communicate back to running coroutines using said channels. This allows the user to use <em>whatever</em> standard networking implementation they desire and route the results back into the coroutine environment when they are available.</p>
 <p>The main consideration the user may need to make when executing blocking networking operations in <code>mce:<a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">await()</a></code> calls is the number of default await worker threads they want available by default. <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code> will spawn additional threads as necessary, but it tries to keep a preconfigured number of reusable worker threads in existence. If the user is consistently executing many blocking calls they can consider spawning more reusable worker threads to improve efficiency. This count of worker threads can be modified in this library's toplevel <code>CMakeLists.txt</code> by modifying the <code>MCEMINAWAITPROCS</code> variable.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Prerequisites</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
-<h3><a class="anchor" id="autotoc_md14"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Environment</h3>
 <p>This project is designed for a POSIX linux environment.</p>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Libraries</h3>
 <p>The following POSIX libraries are required:</p><ul>
 <li>pthread // it is potentially possible that a different threading library is required depending on OS configuration</li>
@@ -288,7 +291,7 @@ Libraries</h3>
 <li>boost/circular_buffer</li>
 </ul>
 <p>It should be noted that the boost features are automatically downloaded and built from source for this project, as necessary.</p>
-<h3><a class="anchor" id="autotoc_md16"></a>
+<h3><a class="anchor" id="autotoc_md17"></a>
 Tools</h3>
 <ul>
 <li>c++11 compiler toolchain</li>
@@ -298,31 +301,31 @@ Tools</h3>
 <li>wget</li>
 <li>tar</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Building the library</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>If you want to build unit tests you will need to checkout submodules for the googletest framework: </p><div class="fragment"><div class="line">git clone --recurse-submodules git@git.elektrobitautomotive.com:dennbla/cppconcurrency.git</div>
 </div><!-- fragment --><p>Building on linux: </p><div class="fragment"><div class="line">cmake .</div>
 <div class="line">make mce</div>
 </div><!-- fragment --><p>Which produces the static library: </p><div class="fragment"><div class="line">libmce.a</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
 Boost Version</h2>
 <p>The library build <code>make</code> targets will download and build <code>boost</code> from source if the specified version of boost source code is not available. The version of boost can be configured by modifying the following variables in the <a href="CMakeLists.txt">CMakeLists.txt</a>: </p><div class="fragment"><div class="line">set(MCE_BOOST_MAJOR_VERSION 1)</div>
 <div class="line">set(MCE_BOOST_MINOR_VERSION 85)</div>
 <div class="line">set(MCE_BOOST_PATCH_VERSION 0)</div>
 </div><!-- fragment --><p>If the boost download url becomes outdated, consider either updating the <code>MCE_BOOST_DOWNLOAD_URL</code> <code>CMake</code> variable.</p>
-<h3><a class="anchor" id="autotoc_md19"></a>
+<h3><a class="anchor" id="autotoc_md20"></a>
 Pre-downloaded Boost</h3>
 <p>You can manually download and extract boost in the root of this repository to <code>boost/boost_major_minor_patch</code> (replace <code>major</code>, <code>minor</code>, and <code>patch</code> with appropriate version values and be sure to update the <code>CMakeLists.txt</code> <code>MCE_BOOST_MAJOR_VERSION</code>, <code>MCE_BOOST_MINOR_VERSION</code>, and <code>MCE_BOOST_PATCH_VERSION</code> variables).</p>
 <p>Doing this will skip the <code>boost</code> download step.</p>
-<h3><a class="anchor" id="autotoc_md20"></a>
+<h3><a class="anchor" id="autotoc_md21"></a>
 Pre-built Boost</h3>
 <p>It is also possible to use linux symlinks to point to a <em>prebuilt</em> <code>boost</code> version. After making the symlink, you will need to create a file called <code>boost.built</code> in the project's root (with a command doing something like: <code>touch boost.built</code>).</p>
 <p>WARNING: If you use a <em>prebuilt</em> version of <code>boost</code>, you <em>MUST</em> ensure that the following features are built: </p><div class="fragment"><div class="line">context </div>
 <div class="line">coroutine</div>
 <div class="line">thread</div>
 </div><!-- fragment --><p>You can do this by passing the following arguments to <code>b2</code> when building <code>boost</code>: </p><div class="fragment"><div class="line">--with-context --with-coroutine --with-thread</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md22"></a>
 Configuring library threadcounts</h2>
 <p>The following features can be configured <code>ON</code>/<code>OFF</code> enable or disable compile time defines which configure or disable default background threads: </p><div class="fragment"><div class="line"># Define the count of threads in the background default threadpool accessed by </div>
 <div class="line"># features like `mce::parallel()`. If `0` is set (the default), the library will </div>
@@ -338,7 +341,7 @@ Configuring library threadcounts</h2>
 <li>1 background timer thread</li>
 </ul>
 <p>There will also be the main thread the process spawns on, so the total default threadcount after initialization is N+3.</p>
-<h3><a class="anchor" id="autotoc_md22"></a>
+<h3><a class="anchor" id="autotoc_md23"></a>
 Building the library with minimal threadcount</h3>
 <p>In many cases, having a minimal count of background worker threads is ideal. This is because many (most?) programs are not bottlenecked by CPU throughput, and will benefit instead from minimal coroutine communication latency.</p>
 <p>The <code>mce_minimal</code> <code>make</code> target is the equivalent of setting </p><div class="fragment"><div class="line">set(MCEMAXPROCS 1)</div>
@@ -355,7 +358,7 @@ Building the library with minimal threadcount</h3>
 <p>The 3 non-main threads will block and take no further resources until needed. This pattern is suprisingly useful, as the main thread can launch all other operations on the coroutine background worker thread using <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>. If interprocess communication is necessary, the main thread can begin listening for messages at this point, otherwise it can block.</p>
 <p>A program designed for <code>mce</code> multithreaded execution (IE, explicit calls to <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> and <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code>) will still function in this environment. In fact, assuming the user is not manually using custom <code><a class="el" href="structmce_1_1threadpool.html">mce::threadpool</a></code> objects, <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> and <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code> become nearly indistinguishable from <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> when operating with a single executor thread, they "Just Work".</p>
 <p>It should be noted that scheduling exclusively with <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">ccc::concurrent()</a></code> will provide similar behavior to compiling against <code>mce_minimal</code>, so if your program already is written with singlethreaded concurrency in mind, it may be unecessary to change link targets (though doing so will save a small amount of memory).</p>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 Linking the library</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>To link against and use this library you will need to add the boost root (IE, <code>boost/boost_1_85_0/</code>) and the <code>mce</code> <code>inc/</code> directory to your program's include flags.</p>
@@ -390,17 +393,17 @@ Linking the library</h1>
 <div class="line">    std::cout &lt;&lt; &quot;received: &quot; &lt;&lt; s &lt;&lt; std::endl;</div>
 <div class="line">    return 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md25"></a>
 Integrating the Library</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>Integrating any framework into an existing codebase is an art unto itself. However, this library is simpler to integrate compared to others of its kind because most code will function as normal when running in a coroutine or can be easily wrapped. For any code you wish to migrate to this framework, the following is suggested:</p>
-<h2><a class="anchor" id="autotoc_md25"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 Feature Checklist</h2>
 <p>Based on your program requirements, specify values in the <code>CMakeLists.txt</code> before building, if necessary:</p><ul>
 <li>Background Executor Threadcount: control with <code>MCEMAXPROCS</code></li>
 <li>Background Await Threadcount: control with <code>MCEMINAWAITPROCS</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 Integration Checklist</h2>
 <p>For all code that needs to be migrated to this library, complete the following checklist:</p><ul>
 <li>replace all relevant usage of <code>std::thread</code>s or <code>pthread</code>s with <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>/<code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> etc.</li>
@@ -411,7 +414,7 @@ Integration Checklist</h2>
 </ul>
 <p>If the user encounters deadlock, that is an indication that some blocking code was not properly addressed. Pay careful attention to the behavior of internal library code, and consider wrapping its blocking calls with <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code>. If some code proves particularly difficult to wrap with <code><a class="el" href="await_8hpp.html#a11e991f059963fa96c32a1dc33975e5f" title="Execute Callable potentially on a different thread and block current context until operation complete...">mce::await()</a></code>, consider leaving that code running on a separate system thread.</p>
 <p>Assuming the user has relevant stress testing implemented the above should be sufficient to demonstrate categorical improvements to user code efficiency.</p>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Additional Integration Improvements Checklist</h2>
 <p>Here are other efficiency improvement steps that can be taken when integrating this library (ordered from most to least important):</p><ul>
 <li>replace interthread message passing and communication with channels. IE, channels are generally faster than raw mutex/conditions.</li>
@@ -420,14 +423,14 @@ Additional Integration Improvements Checklist</h2>
 <li>rewrite any algorithms that need to be concurrent, but not parallel, with <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> or <code><a class="el" href="scheduler_8hpp.html#a8c2a408455943622c5f71f3ff46e5068" title="returns a shared pointer to the scheduler the calling scope is running in">mce::this_scheduler()</a>-&gt;schedule()</code> to reduce communication latency introduced by unnecessarily running code on separate CPU cores.</li>
 <li>rewrite complicated asynchronous algorithms to benefit from direct coroutine channel communication, rather than abstracted through many levels of boilerplate. This will improve code clarity and may improve efficiency as well. IE, it's much easier to understand and debug two functions talking through a channel than a complicated array of asynchronous callbacks and state checks</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md28"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 Building unit tests</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>From repository toplevel </p><div class="fragment"><div class="line">cmake .  </div>
 <div class="line">make mce_ut  </div>
 </div><!-- fragment --><p>run unit tests: </p><div class="fragment"><div class="line">./tst/mce_ut</div>
 </div><!-- fragment --><p>Tests are written using gtest and therefore can filter which tests will actually execute using <code>--gtest_filter="your regular expression here"</code> as an argument provided to <code>mce_ut</code>.</p>
-<h1><a class="anchor" id="autotoc_md29"></a>
+<h1><a class="anchor" id="autotoc_md30"></a>
 Building examples</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>From repository toplevel </p><div class="fragment"><div class="line">cmake .  </div>
@@ -468,7 +471,7 @@ Building examples</h1>
 <div class="line">  done_ch.recv(r);</div>
 <div class="line">  return 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md30"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md31"></a>
 terminal output</h3>
 <div class="fragment"><div class="line">$ ./ex/example_002</div>
 <div class="line">0</div>
@@ -481,12 +484,12 @@ terminal output</h3>
 <div class="line">7</div>
 <div class="line">8</div>
 <div class="line">9</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md31"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md32"></a>
 Continuous Integration Tests</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>The python script <code>continuous_integration.py</code> is to be run with <code>python3 ./script/continuous_integration.py</code>. It builds and runs all enabled unit tests and examples, to generally verify everything is working. Running this may take a long time. It may also heavily tax your system's cpu resources.</p>
 <p>Continuous integration tests require both <code>gcc/g++</code> and <code>clang/clang++</code> toolchains to be installed on the system in their normal locations (<code>/usr/bin/</code>). Testing attempts to be fairly exhaustive.</p>
-<h1><a class="anchor" id="autotoc_md32"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 Bug Reports</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>If you are having issues with the code that is not solved by the help provided in the documentation:</p>
@@ -501,7 +504,7 @@ Bug Reports</h1>
 <li>Information about your executing hardware: processor model, processor specs, RAM specs, etc.</li>
 <li>Information about your executing environment: OS &amp; OS version, build environment (ie, gcc or clang, cmake or gradle, etc. along with version information for said tools), build settings (the actual arguments given to each tool), etc.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md33"></a>
+<h1><a class="anchor" id="autotoc_md34"></a>
 Contributing</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>Contributions to this project are welcome, please read this primer for instructions on how to contribute </p>

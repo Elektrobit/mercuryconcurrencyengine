@@ -65,13 +65,13 @@ $(function() {
 <div class="title">Summary of Concurrent Operations </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md49"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md50"></a>
 A word about channels</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>All <code>mce</code> channel objects correctly communicate data between coroutines, threads, or any combination of the two in a threadsafe/coroutinesafe way. These objects are HIGHLY RECOMMENDED as the primary method of communication between concurrent code, because they are extremely simple in practice and cover most communication usecases. See <a class="el" href="md_data_communication_summary.html">Data Communication Summary</a>. More examples of channel usage are available throughout the documentation, including below in this file.</p>
 <p>If an edgecase occurs where mutexes &amp; condition variables would be the preferred solution, see <code>mutex</code> and <code>condition_variable</code> in the <code>united synchronization primatives</code> section of <code>High Level Concurrency</code>.</p>
 <p>Note that all channels are automatically included as part of <code><a class="el" href="mce_8hpp.html">mce/mce.hpp</a></code>.</p>
-<h1><a class="anchor" id="autotoc_md50"></a>
+<h1><a class="anchor" id="autotoc_md51"></a>
 Concurrency Table of Contents</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>All concurrent code is included with the header <code><a class="el" href="mce_8hpp.html">mce/mce.hpp</a></code></p><ul>
@@ -81,7 +81,7 @@ Concurrency Table of Contents</h1>
 <li><a href="#concurrent-lifecycle-management">Concurrent Lifecycle Management</a></li>
 </ul>
 <hr  />
- <h1><a class="anchor" id="autotoc_md52"></a>
+ <h1><a class="anchor" id="autotoc_md53"></a>
 Concurrency Design</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>It should be noted that concurrency and scheduling algorithms are always an imperfect art form. There is no "one scheduling algorithm to rule them all", because the proper scheduling algorithm is determined by the actual design and needs of a program. For instance, most of the time the best scheduling algorithm... is to not schedule anything (just execute right there)!. However, where this is not possible or preferrable, there are a there are a few categories of thinking that can help when programming a general "best effort" program which uses concurrency.</p>
@@ -103,7 +103,7 @@ Concurrency Design</h1>
 <li><code><a class="el" href="timer_8hpp.html#abccb4fe0939b4eb26cd7e8a70c3b33d2" title="Put coroutine or thread to sleep in a blocking fashion.">mce::sleep()</a></code>: block the caller until a timeout occurs</li>
 </ul>
 <p>There are many edgecases where the above is insufficient, but I believe they are good guidelines for writing code that behaves well in most circumstances.</p>
-<h1><a class="anchor" id="autotoc_md53"></a>
+<h1><a class="anchor" id="autotoc_md54"></a>
 High Level Concurrency</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <ul>
@@ -118,7 +118,7 @@ High Level Concurrency</h1>
 <li><a href="#united-synchronization-primatives">united synchronization primatives</a></li>
 </ul>
 <hr  />
- <h2><a class="anchor" id="autotoc_md55"></a>
+ <h2><a class="anchor" id="autotoc_md56"></a>
 schedule</h2>
 <p><code><a class="el" href="structmce_1_1scheduler.html#a013cd1b794606776a4c409f50ac437f1" title="schedule allocated coroutine(s)">mce::scheduler::schedule()</a></code> is also addressed in the <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code> section. However, because of its importance to higher level API, it is examined first here: </p><div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -149,7 +149,7 @@ schedule</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p><code><a class="el" href="structmce_1_1scheduler.html#a013cd1b794606776a4c409f50ac437f1" title="schedule allocated coroutine(s)">mce::scheduler::schedule()</a></code> is an extremely flexible templated mechanism. Higher level operations pass their arguments directly to it, so all features and behavior are inherited by those mechanisms (<code>mce::threadpool::schedule()</code>, <code><a class="el" href="threadpool_8hpp.html#af318b6bdd9e8e98245499ea41720208a" title="return the default threadpool&#39;s">mce::default_threadpool()</a>-&gt;schedule()</code>, <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code>, <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code>, <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code>).</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md57"></a>
+ <h2><a class="anchor" id="autotoc_md58"></a>
 concurrent</h2>
 <div class="fragment"><div class="line">/// Schedule a coroutine(s), preferring best communication latency</div>
 <div class="line">template &lt;typename... As&gt;</div>
@@ -165,7 +165,7 @@ concurrent</h2>
 </ol>
 <p>Then <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> may provide better performance than <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> because the arguments will attempt to be scheduled on the current thread, as opposed to potentially scheduling on and synchronizing with a <em>different</em> thread, which can add significant overhead when the coroutines running on different threads need to communicate.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md59"></a>
+ <h2><a class="anchor" id="autotoc_md60"></a>
 parallel</h2>
 <div class="fragment"><div class="line">/// Schedule a coroutine(s), preferring max CPU throughput</div>
 <div class="line">template &lt;typename... As&gt;</div>
@@ -235,7 +235,7 @@ parallel</h2>
 <div class="line">threadpool address[0x5572d91e4440]</div>
 <div class="line">threadpool address[0x5572d91e4440]</div>
 </div><!-- fragment --><hr  />
- <h2><a class="anchor" id="autotoc_md61"></a>
+ <h2><a class="anchor" id="autotoc_md62"></a>
 balance</h2>
 <div class="fragment"><div class="line">/// Schedule a coroutine(s), balancing CPU and communication needs</div>
 <div class="line">template &lt;double RATIO_LIMIT=2.0, typename F, typename... As&gt;</div>
@@ -257,21 +257,21 @@ balance</h2>
 <p>The operating theory of this algorithm is that if rebalancing occurs only when it is truly necessary, then the newly scheduled coroutines will themselves schedule additional operations on their current thread (instead of the thread of their parent coroutine), allowing the workload to balance naturally. Manual rebalancing will recur until the scheduled coroutines are naturally scheduling additional coroutines on their current threads in roughly equal amounts.</p>
 <p><code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code> may provide better performance than <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> or <code><a class="el" href="threadpool_8hpp.html#a60e70d3b46c34e94edf9f8e00442bffb" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::parallel()</a></code> when both evenly distributed CPU usage and best-case communication latency are valued. An example of this may be in a program which runs for a long time, and may need to occasionally rebalance scheduling loads when scheduling new coroutines. If the developer determines this to be the case after performance analysis, they can generally replace usages of <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> in their code with <code><a class="el" href="threadpool_8hpp.html#a775daca1186f81e5410f2298abf5b832" title="Launch user function and optional arguments as a coroutine running on a scheduler....">mce::balance()</a></code>, and further tweak their code if performance becomes an issue.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md63"></a>
+ <h2><a class="anchor" id="autotoc_md64"></a>
 custom scheduling</h2>
 <p>The user can implement their own scheduling algorithm on a <code><a class="el" href="structmce_1_1threadpool.html">mce::threadpool</a></code> by calling <code><a class="el" href="structmce_1_1threadpool.html#a16cb352e72cf6f475aaafac00bfb0b8b">mce::threadpool::workers()</a></code> which returns a <code>std::vector&lt;std::shared_ptr&lt;<a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a>&gt;&gt;</code> of schedulers running on worker threads managed by the <code><a class="el" href="structmce_1_1threadpool.html">mce::threadpool</a></code>. The user can then choose when and how to call <code><a class="el" href="structmce_1_1scheduler.html#a013cd1b794606776a4c409f50ac437f1" title="schedule allocated coroutine(s)">mce::scheduler::schedule()</a></code> to launch new coroutines.</p>
 <p>A <em>potential</em> usecase for this is to guarantee that certain high level, root operations execute on different threads, such as launching various services during program startup. The scheduling algorithms generally attempt their best to accomplish this (even <code><a class="el" href="threadpool_8hpp.html#a3ef2c7400038d8f79596c4ae2055df79" title="Launch user function and optional arguments as a coroutine running on a scheduler.">mce::concurrent()</a></code> attempts to accomplish this, because it falls back to the background <code><a class="el" href="threadpool_8hpp.html#af318b6bdd9e8e98245499ea41720208a" title="return the default threadpool&#39;s">mce::default_threadpool()</a></code> when not called on a running <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code>, which is generally the case in a program <code>main()</code>). However, the scheduling algorithms do not have any way to distinguish between tasks passed to them, and may sometimes require user intervention to handle edgecases.</p>
 <p>For instance, if a program's <code>main()</code> is launching distinct services at startup which need to be evenly distributed across threads, and those services <em>themselves</em> schedule on their associated <code><a class="el" href="structmce_1_1threadpool.html">mce::threadpool()</a></code> (the <code><a class="el" href="threadpool_8hpp.html#af318b6bdd9e8e98245499ea41720208a" title="return the default threadpool&#39;s">mce::default_threadpool()</a></code>), the <code><a class="el" href="structmce_1_1threadpool.html">mce::threadpool()</a></code> may accidentally schedule two root services on the same thread because <code>main()</code> is in competition with a running coroutine for access to <code>mce::threadpool::schedule()</code>.</p>
 <p>Instead, by directly utilizing the vector of <code><a class="el" href="structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines">mce::scheduler</a></code>s returned from a call to <code><a class="el" href="structmce_1_1threadpool.html#a16cb352e72cf6f475aaafac00bfb0b8b">mce::threadpool::workers()</a></code>, the developer can ensure each coroutine is scheduled on the correct thread.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md65"></a>
+ <h2><a class="anchor" id="autotoc_md66"></a>
 yield</h2>
 <p><code>void <a class="el" href="coroutine_8hpp.html#a43169feccceeceeb2b4ce668671196df">mce::yield()</a></code></p>
 <p>Calls <code><a class="el" href="coroutine_8hpp.html#a43169feccceeceeb2b4ce668671196df">mce::co::yield()</a></code> if called from a running coroutine, otherwise nothing occurs. Calling this will allow other coroutines to run on the current thread because it will pause execution of the calling concurrent context.</p>
 <p>Most usage of this operation will be internal to this framework. However, a user may sometimes need to call this operation directly, because it can be used to temporarily interrupt <em>long</em> running calls that are executing many operations continuously. Yielding out of such calls periodically will allow other coroutines to run.</p>
 <p>Another example where explicitly calling <code><a class="el" href="coroutine_8hpp.html#a43169feccceeceeb2b4ce668671196df">yield()</a></code> is useful is when implementing non-blocking calls, where a coroutine can <code><a class="el" href="coroutine_8hpp.html#a43169feccceeceeb2b4ce668671196df">yield()</a></code> as soon as an operation fails before trying again (In fact, it is often best to <code><a class="el" href="coroutine_8hpp.html#a43169feccceeceeb2b4ce668671196df">yield()</a></code> after any non-blocking call, whether it succeeds or not to ensure the coroutine eventually relinquishes control to another coroutine).</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md67"></a>
+ <h2><a class="anchor" id="autotoc_md68"></a>
 await</h2>
 <div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -375,7 +375,7 @@ await</h2>
 <div class="line">fileContent: hello world!</div>
 <div class="line">$</div>
 </div><!-- fragment --><hr  />
- <h2><a class="anchor" id="autotoc_md69"></a>
+ <h2><a class="anchor" id="autotoc_md70"></a>
 timer</h2>
 <div class="fragment"><div class="line">// Launch a timer which will execute the timeout_handler at timeout </div>
 <div class="line">template &lt;typename F, typename... As&gt;</div>
@@ -414,13 +414,13 @@ timer</h2>
 <div class="line">// returns difference (p0-p1) as the given time_unit</div>
 <div class="line">size_t mce::get_difference(mce::time_unit u, mce::time_point p0, mce::time_point p1); </div>
 </div><!-- fragment --><hr  />
- <h2><a class="anchor" id="autotoc_md71"></a>
+ <h2><a class="anchor" id="autotoc_md72"></a>
 sleep</h2>
 <div class="fragment"><div class="line">void mce::sleep(mce::time_unit u, std::uint64_t count);</div>
 <div class="line">void mce::sleep(mce::duration d);</div>
 </div><!-- fragment --><p> These function for both coroutines and threads. They implement blocking sleep behavior that allows other coroutines/threads to run.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md73"></a>
+ <h2><a class="anchor" id="autotoc_md74"></a>
 united synchronization primatives</h2>
 <div class="fragment"><div class="line">class mce::mutex</div>
 <div class="line">class mce::unitex_condition_variable</div>
@@ -466,7 +466,7 @@ united synchronization primatives</h2>
 </div><!-- fragment --><p>Terminal output: </p><div class="fragment"><div class="line">$ ./ex/example_018</div>
 <div class="line">i: 0</div>
 <div class="line">i: 1</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md74"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md75"></a>
 Low Level Concurrency</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <ul>
@@ -479,7 +479,7 @@ Low Level Concurrency</h1>
 <li><a href="#timer-service">timer service</a></li>
 </ul>
 <hr  />
- <h2><a class="anchor" id="autotoc_md76"></a>
+ <h2><a class="anchor" id="autotoc_md77"></a>
 coroutine</h2>
 <div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -527,7 +527,7 @@ coroutine</h2>
 </div><!-- fragment --><p> <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code> is the lowest level concurrent object managed by this library. It is a wrapper for the <code>boost::coroutines2::coroutine</code> object with some extra work done to expose the functionality into an external API. This is the object that all concurrent code is running inside of.</p>
 <p><code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code>'s templated constructors expect a Callable (either a function pointer or an object (potentially a lambda) with an operator() method that accepts no arguments). If the StackAllocator constructor is used it will allocate the coroutine stack using that object instead of the default allocator.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md78"></a>
+ <h2><a class="anchor" id="autotoc_md79"></a>
 spinlock</h2>
 <div class="fragment"><div class="line">class mce::spinlock;</div>
 <div class="line">void mce::spinlock::lock(); /// acquire the lock</div>
@@ -541,7 +541,7 @@ spinlock</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p>In such a scenario it is (almost certainly) better to block the coroutine using a <code><a class="el" href="structmce_1_1scheduler_1_1parkable.html" title="object containing information to block and unblock a coroutine (running in a scheduler) or thread">mce::scheduler::parkable</a></code> and unblock the coroutine with some other code in the future, because parking causes coroutines to stop using CPU and is very fast.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md80"></a>
+ <h2><a class="anchor" id="autotoc_md81"></a>
 scheduler</h2>
 <div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -705,7 +705,7 @@ scheduler</h2>
 <div class="line">send done</div>
 <div class="line">recv done</div>
 </div><!-- fragment --><hr  />
- <h2><a class="anchor" id="autotoc_md82"></a>
+ <h2><a class="anchor" id="autotoc_md83"></a>
 parkable</h2>
 <div class="fragment"><div class="line">struct mce::scheduler::parkable;</div>
 <div class="line"> </div>
@@ -729,7 +729,7 @@ parkable</h2>
 <p>This is an <em>IMPORTANT</em> detail, if a <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code> is never <code>unpark()</code>ed, it is effectively a <em>memory leak</em>. This means the user must properly <code>close()</code> channels or otherwise ensure <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code>s are not blocked when operations cease.</p>
 <p>It is technically possible to use a <code>parkable</code> allocated somewhere outside of the <code><a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a></code>'s stack, though it is generally unnecessary to do so, as it can generally be created on a the parked coroutine or thread's stack.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md84"></a>
+ <h2><a class="anchor" id="autotoc_md85"></a>
 park</h2>
 <div class="fragment"><div class="line">struct mce::scheduler::park </div>
 <div class="line">{</div>
@@ -765,7 +765,7 @@ park</h2>
 <p>After passing the coroutine to its destination, the specified <code>cleanup()</code> method will be called with <code>memory</code>. This can be any operation, accepting any data as an argument. A common usecase is to unlock an atomic lock object.</p>
 <p>At this point, control of the given <code>coroutine</code> completely leaves the <code>scheduler</code>, it is up to the destination code to decide what to do with the <code>coroutine</code>.</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md86"></a>
+ <h2><a class="anchor" id="autotoc_md87"></a>
 threadpool</h2>
 <div class="fragment"><div class="line">namespace mce {</div>
 <div class="line"> </div>
@@ -871,7 +871,7 @@ threadpool</h2>
 <p>NOTE: If a <code>scheduler</code> managed by a <code>threadpool</code> has its <code>suspend()</code>/<code>resume()</code>/<code>halt()</code> methods called, it will <em>actually</em> call the <code>threadpool</code>'s implementations of the same methods!</p>
 <p>The thread worker count of <code><a class="el" href="threadpool_8hpp.html#af318b6bdd9e8e98245499ea41720208a" title="return the default threadpool&#39;s">mce::default_threadpool()</a></code> can be specified when compiling your software by modifying CMakeLists.txt variable <code>MCEMAXPROCS</code>. If <code>MCEMAXPROCS</code> is left undefined, the library will be compiled with an internally determined worker count (which aims to achieve peak CPU throughput).</p>
 <hr  />
- <h2><a class="anchor" id="autotoc_md88"></a>
+ <h2><a class="anchor" id="autotoc_md89"></a>
 timer service</h2>
 <p>Timer types &amp; utility functions: </p><div class="fragment"><div class="line">enum time_unit </div>
 <div class="line">{</div>
@@ -936,7 +936,7 @@ timer service</h2>
 <div class="line">                                           microsecs_till_timeout, </div>
 <div class="line">                                           my_timeout_handler);</div>
 </div><!-- fragment --><p>The timer can be synchronously removed (if it is not already executing) with: </p><div class="fragment"><div class="line">my_timer_service.remove(tid);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md89"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md90"></a>
 Concurrent Lifecycle Management</h1>
 <p><img src="img/mercury_icon_tiny.png" alt="mercury_icon" class="inline"/></p>
 <p>See <code>suspend()</code> and <code>resume()</code> procedures in the following sections for how to pause/unpause execution of coroutines:</p><ul>
