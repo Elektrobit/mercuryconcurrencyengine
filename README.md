@@ -135,10 +135,8 @@ As a generalized rule:
 
 It should be noted that in many or most cases the bottleneck is actually not the CPU throughput. In fact, program bottlenecks are not the real reason for many uses of threads, the user may be leveraging threads for asynchronous behavior in general. In those circumstances, best results will probably be found with `mce::concurrent()`.
 
-There are various mechanisms to control the configuration of the background threads (including disabling them, or specifying the count of threads), see [Building subsets of library features](#building-subsets-of-library-features) for more information.
-
 ##### Accessible Low level API:
-The user can manually create and manage `mce::scheduler` objects to schedule and execute coroutines. If the user desires, they can even create custom `mce::coroutine` objects to manually manage.
+The user can manually create and manage the underlying `mce::scheduler` objects to schedule and execute coroutines. If the user desires, they can even create custom `mce::coroutine` objects to manually manage.
 
 See [summary of concurrent operations](concurrency_summary.md) for documentation on all of the above features.
 
