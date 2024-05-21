@@ -491,7 +491,7 @@ coroutine</h2>
 <div class="line">     @return an allocated coroutine</div>
 <div class="line">     */</div>
 <div class="line">    template &lt;typename Callable, typename... As&gt;</div>
-<div class="line">    static uptr&lt;coroutine&gt; make(Callable&amp;&amp; cb, As&amp;&amp;... as);</div>
+<div class="line">    static std::unique_ptr&lt;coroutine&gt; make(Callable&amp;&amp; cb, As&amp;&amp;... as);</div>
 <div class="line"> </div>
 <div class="line">    /// construct a coroutine from a thunk</div>
 <div class="line">    template &lt;typename THUNK&gt; </div>
@@ -736,7 +736,7 @@ park</h2>
 <div class="line">    struct continuation</div>
 <div class="line">    {</div>
 <div class="line">        // pointer to coroutine storage location</div>
-<div class="line">        uptr&lt;mce::coroutine&gt;* coroutine; </div>
+<div class="line">        std::unique_ptr&lt;mce::coroutine&gt;* coroutine; </div>
 <div class="line"> </div>
 <div class="line">        // memory to source scheduler storage location</div>
 <div class="line">        std::weak_ptr&lt;mce::scheduler&gt;* source;</div>
@@ -761,7 +761,7 @@ park</h2>
 <div class="line">};</div>
 </div><!-- fragment --><p>This object is the lowest level coroutine blocking mechanism. It is utilized by the higher level <code><a class="el" href="structmce_1_1scheduler_1_1parkable.html" title="object containing information to block and unblock a coroutine (running in a scheduler) or thread">mce::scheduler::parkable</a></code> object. In comparison, this is a more basic type only for blocking coroutines, and requires more manual work because of its more generic nature. However, this type is exposed in case it is required by user code.</p>
 <p>All higher level coroutine blocking mechanics are built on this structure. A mutable reference to a <code>park::continuation</code> is passed to <code>park::suspend()</code>, which will register the continuation with the <code>scheduler</code> running on the current thread and <code><a class="el" href="coroutine_8hpp.html#a43169feccceeceeb2b4ce668671196df">yield()</a></code> control to said <code>scheduler</code>, suspending execution of the calling coroutine.</p>
-<p>When the <code>scheduler</code> resumes control, it will assign the just running coroutine to the dereferenced <code>uptr&lt;<a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a>&gt;</code> <code>coroutine</code>. It will then assign its weak_ptr to the dereferenced <code>std::weak_ptr&lt;scheduler&gt;</code> <code>source</code>, allowing the owner of the continuation to re-schedule the coroutine on the source scheduler.</p>
+<p>When the <code>scheduler</code> resumes control, it will assign the just running coroutine to the dereferenced <code>std::unique_ptr&lt;<a class="el" href="structmce_1_1coroutine.html">mce::coroutine</a>&gt;</code> <code>coroutine</code>. It will then assign its weak_ptr to the dereferenced <code>std::weak_ptr&lt;scheduler&gt;</code> <code>source</code>, allowing the owner of the continuation to re-schedule the coroutine on the source scheduler.</p>
 <p>After passing the coroutine to its destination, the specified <code>cleanup()</code> method will be called with <code>memory</code>. This can be any operation, accepting any data as an argument. A common usecase is to unlock an atomic lock object.</p>
 <p>At this point, control of the given <code>coroutine</code> completely leaves the <code>scheduler</code>, it is up to the destination code to decide what to do with the <code>coroutine</code>.</p>
 <hr  />
