@@ -273,7 +273,7 @@ This behavior allows other coroutines to execute while `mce::await()` is blocked
 
 It should be noted, that code executing inside a call to `mce::await()` will return the `std::shared_ptr<mce::scheduler>` associated with the *caller* of `mce::await()` when `mce::in_scheduler()`, `mce::this_scheduler()`, or `mce::this_scheduler_ref()` are invoked. Similarly, `mce::this_threadpool()` will return the `mce::shared_ptr<mce::threadpool>` associated with the calling thread. This protects the user by allowing scheduling operations (such as `mce::concurrent()` and `mce::parallel()`) to operate as if they were being called in the coroutine's original environment.
 
-If `mce::await()` is executed outside of a coroutine (`mce::co`) then `mce::await()` will call its arguments on the current thread instead of executing on a worker thread. Similarly, a call to `mce::await()` within a task executing on an await worker thread will execute immediately. Otherwise `mce::await()` will attempt to execute on a thread in a pre-cached pool of worker threads. 
+If `mce::await()` is executed outside of a coroutine (`mce::coroutine`) then `mce::await()` will call its arguments on the current thread instead of executing on a worker thread. Similarly, a call to `mce::await()` within a task executing on an await worker thread will execute immediately. Otherwise `mce::await()` will attempt to execute on a thread in a pre-cached pool of worker threads. 
 
 The minimum count of background await worker threads is specified when compiling this library with compiler define `MCEMINAWAITPROCS`. If said define is not provided, it defaults to 1. 
 
