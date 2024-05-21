@@ -1,0 +1,13 @@
+<map id="inc/mce/atomic.hpp" name="inc/mce/atomic.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="263,5,413,32"/>
+<area shape="rect" id="node2" href="$condition__variable_8hpp.html" title=" " alt="" coords="5,237,231,263"/>
+<area shape="rect" id="node4" href="$mutex_8hpp.html" title=" " alt="" coords="334,155,481,181"/>
+<area shape="rect" id="node5" href="$scheduler_8hpp.html" title=" " alt="" coords="435,80,601,107"/>
+<area shape="rect" id="node9" href="$timer_8hpp.html" title=" " alt="" coords="171,155,310,181"/>
+<area shape="rect" id="node3" href="$mce_8hpp.html" title=" " alt="" coords="410,393,543,420"/>
+<area shape="rect" id="node6" href="$await_8hpp.html" title=" " alt="" coords="406,319,547,345"/>
+<area shape="rect" id="node7" href="$buffered__channel_8hpp.html" title=" " alt="" coords="783,319,1000,345"/>
+<area shape="rect" id="node8" href="$threadpool_8hpp.html" title=" " alt="" coords="356,237,531,263"/>
+<area shape="rect" id="node10" href="$unbuffered__channel_8hpp.html" title=" " alt="" coords="606,229,753,271"/>
+<area shape="rect" id="node11" href="$chan_8hpp.html" title=" " alt="" coords="571,319,707,345"/>
+</map>

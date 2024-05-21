@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structmce_1_1lifecycle_1_1implementation.html" title="virtual interface for implementors of lifecycle" alt="" coords="5,5,231,32"/>
+<area shape="rect" id="node2" href="$structmce_1_1scheduler.html" title="object responsible for scheduling and executing coroutines" alt="" coords="282,5,403,32"/>
+<area shape="rect" id="node3" href="$structmce_1_1threadpool.html" title=" " alt="" coords="279,56,407,83"/>
+<area shape="rect" id="node4" href="$structmce_1_1lifecycle.html" title="an interface for implementing lifecycle control operations" alt="" coords="61,56,175,83"/>
+</map>

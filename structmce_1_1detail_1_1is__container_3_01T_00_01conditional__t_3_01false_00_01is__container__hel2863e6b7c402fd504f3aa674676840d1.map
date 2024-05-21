@@ -1,0 +1,4 @@
+<map id="mce::detail::is_container&lt; T, conditional_t&lt; false, is_container_helper&lt; typename T::value_type, typename T::iterator, decltype(std::declval&lt; T &gt;().begin()), decltype(std::declval&lt; T &gt;().end()) &gt;, void &gt; &gt;" name="mce::detail::is_container&lt; T, conditional_t&lt; false, is_container_helper&lt; typename T::value_type, typename T::iterator, decltype(std::declval&lt; T &gt;().begin()), decltype(std::declval&lt; T &gt;().end()) &gt;, void &gt; &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,264,195"/>
+<area shape="rect" id="node2" title=" " alt="" coords="79,5,191,32"/>
+</map>

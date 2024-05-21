@@ -1,0 +1,5 @@
+<map id="mce::scheduler" name="mce::scheduler">
+<area shape="rect" id="node1" title="object responsible for scheduling and executing coroutines" alt="" coords="97,80,219,107"/>
+<area shape="rect" id="node2" href="$structmce_1_1lifecycle.html" title="an interface for implementing lifecycle control operations" alt="" coords="5,5,119,32"/>
+<area shape="rect" id="node3" href="$structmce_1_1lifecycle_1_1implementation.html" title="virtual interface for implementors of lifecycle" alt="" coords="143,5,368,32"/>
+</map>
