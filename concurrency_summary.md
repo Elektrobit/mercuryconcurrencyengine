@@ -22,7 +22,7 @@ All concurrent code is included with the header `mce/mce.hpp`
 ## Concurrency Design
 ![mercury_icon](img/mercury_icon_tiny.png)
 
-It should be noted that concurrency and scheduling algorithms are always an imperfect art form. There is no "one scheduling algorithm to rule them all", because the proper scheduling algorithm is determined by the actual design and needs of a program. For instance, most of the time the best scheduling algorithm... is to not schedule anything (just execute right there)!. However, where this is not possible or preferrable, there are a there are a few categories of thinking that can help when programming a general "best effort" program which uses concurrency.
+It should be noted that concurrency and scheduling algorithms are always an imperfect art form. There is no "one scheduling algorithm to rule them all", because the proper scheduling algorithm is determined by the actual design and needs of a program. For instance, most of the time the best scheduling algorithm... is to not schedule anything (just execute right there)! However, where this is not possible or preferrable, there are a there are a few categories of thinking that can help when programming a general "best effort" program which uses concurrency.
 
 This first is to identify whether a piece of code needs concurrency:
 - for CPU throughput 
