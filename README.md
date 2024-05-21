@@ -572,6 +572,8 @@ If you are having issues with the code that is not solved by the help provided i
 
 [Summary of Data Communication Operations](data_communication_summary.md)
 
+[Doxygen Documentation](https://elektrobit.github.io/mercuryconcurrencyengine/)
+
 Then you are welcome to report an issue in the Issues tab. In your issue please include:
 1. A clear, well written explanation of what you are trying to accomplish
 2. A clear, well written explanation of the error
